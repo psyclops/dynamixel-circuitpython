@@ -44,8 +44,6 @@ Inventory:
 
     demo.mpy - compiled demo.py
 
-    openrb_150/ - CircuitPython board definition for building UF2
-
     README.md - this file
     
     atmel-samd/ - CircuitPython ATMEL build config overlay directory
