@@ -31,12 +31,12 @@
 #define DEFAULT_UART_BUS_RX (&pin_PA23)
 
 // ==============================================================================
-// MEMORY PARTITION FORCING: flash configuration
+// MEMORY PARTITION FORCING: flash configuration  <--- EDIT THE NUMBER 38 BELOW
 // ==============================================================================
 // Shrink internal flash drive layout from 38KB down to 64KB.
 // This instantly grants an extra 38KB of flash storage space to FLASH_FIRMWARE.
 // We DO NOT define START_ADDR here; mpconfigport.h will compute it automatically.
-#define CIRCUITPY_INTERNAL_FLASH_FILESYSTEM_SIZE (38* 1024)
+#define CIRCUITPY_INTERNAL_FLASH_FILESYSTEM_SIZE (38 * 1024)
 
 #endif // __MICROPY_INCLUDED_ATMEL_SAMD_BOARDS_OPENRB_150_MPCONFIGBOARD_H__
 
