@@ -1,14 +1,19 @@
 ------------------------------------------------------------------------------
 
+
 dynamixel-circuitpython
 
+
 ------------------------------------------------------------------------------
+
 
 CircuitPython library and associated custom CircuitPython firmware to enable
 driving Robotis Dynamixel servo motors attached to an OpenRB-150 board 
 running as a CircuitPython device.
 
+
 ------------------------------------------------------------------------------
+
 
 The MIT License (MIT)
 
@@ -32,7 +37,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
+
 ------------------------------------------------------------------------------
+
 
 Inventory:
 
@@ -66,7 +73,9 @@ Inventory:
 
         dynamixel.py - main dynamixel library
 
+
 ------------------------------------------------------------------------------
+
 
 Installation
 
@@ -91,7 +100,9 @@ flash drive should appear in Finder.  Copy both demo.py and code.py to
 CIRCUITPY, attach two XL330 motors as ID 1 & 2 at 1,000,000 baud and you 
 should see the motors move.
 
+
 ------------------------------------------------------------------------------
+
 
 About the dynamixel.py library
 
@@ -134,7 +145,9 @@ supplied in the frozen file config.py
 An example program demo.py is supplied that demonstrates how all available 
 methods can be used.
 
+
 ------------------------------------------------------------------------------
+
 
 Usage:
 
@@ -174,12 +187,20 @@ directly through this object:
 
     servo.on()
     servo.set_velocity(velocity)
+    servo.set_p_gain(P)
     servo.move_to(target)
     enc = servo.read_enc()
     temp = servo.read_temp()
     servo.off()
 
+Alternatively, sync_write commands can be sent to combine multiple movement
+commands to multiple motors:
+
+    sync_move([(servo_a, START_A, VEL_A), (servo_b, START_B, VEL_B)])
+
+
 ------------------------------------------------------------------------------
+
 
 Recompiling the CircuitPython firmware
 
@@ -271,5 +292,6 @@ and connect a serial monitor to it:
 
 You should see debug output including target and actual position and motor 
 temperature as the motors move.
+
 
 -----------------------------------------------------------------------------
