@@ -1,14 +1,14 @@
------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 
-   dynamixel-circuitpython / dynamixel.py                          7/27/26
+dynamixel-circuitpython
 
------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 
 CircuitPython library and associated custom CircuitPython firmware to enable
 driving Robotis Dynamixel servo motors attached to an OpenRB-150 board 
 running as a CircuitPython device.
 
------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 
 The MIT License (MIT)
 
@@ -32,7 +32,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 
 Inventory:
 
@@ -66,7 +66,7 @@ Inventory:
 
         dynamixel.py - main dynamixel library
 
------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 
 Installation
 
@@ -91,7 +91,7 @@ flash drive should appear in Finder.  Copy both demo.py and code.py to
 CIRCUITPY, attach two XL330 motors as ID 1 & 2 at 1,000,000 baud and you 
 should see the motors move.
 
------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 
 About the dynamixel.py library
 
@@ -134,11 +134,29 @@ supplied in the frozen file config.py
 An example program demo.py is supplied that demonstrates how all available 
 methods can be used.
 
------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 
 Usage:
 
-A uart bus object is created for communication on the serial bus:
+Import the main frozen library dynamixel.py and other required components
+
+    import dynamixel
+    import board
+    import busio
+    import digitalio
+
+Set up motor type and baud rate
+
+    MOTOR_TYPE = "XL330"
+    BAUD = 1000000
+
+The config parameters for the motor are pulled from the frozen config.py
+
+    import config
+
+    motor_config = config.get_config(MOTOR_TYPE)
+
+Create a uart bus object for communication on the serial bus:
 
     uart = busio.UART(board.TX1, board.RX1, baudrate=BAUD, timeout=0.01)
     pwr_pin = digitalio.DigitalInOut(board.DXL_PWR_EN)
@@ -146,16 +164,28 @@ A uart bus object is created for communication on the serial bus:
     bus = dynamixel.DynamixelBus(port)
     bus.begin(baudrate=BAUD)
 
-A servo instance is then created for each motor.  This instance is then referenced for all read and write actions.
+A servo instance is then created for each motor.  This instance is then 
+referenced for all read and write actions.
 
-    motor_a = dynamixel.Servo(bus, ID, motor_config)
+    servo = dynamixel.Servo(bus, ID, motor_config)
 
+Motor moves, encoder and temp reads and other functions can now be accessed 
+directly through this object:
 
------------------------------------------------------------------------------
+    servo.on()
+    servo.set_velocity(velocity)
+    servo.move_to(target)
+    enc = servo.read_enc()
+    temp = servo.read_temp()
+    servo.off()
+
+------------------------------------------------------------------------------
 
 Recompiling the CircuitPython firmware
 
-If you want to modify either the dynamixel.py or config.py files you will need to recompile the CircuitPython firmware.  This is failry straight forward with provided circuitpython/ config overlay.
+If you want to modify either the dynamixel.py or config.py files you will 
+need to recompile the CircuitPython firmware.  This is failry straight forward 
+with provided circuitpython/ config overlay.
 
 1. Install build sofware and dependencies
 
@@ -172,11 +202,15 @@ CircuitPython version 10.2.1
 
     git checkout 10.2.1
 
-4. Build the MicroPython cross-compiler tool mpy-cross first. This component packages built-in libraries into the core image. 
+4. Build the MicroPython cross-compiler tool mpy-cross first. This component 
+   packages built-in libraries into the core image. 
 
     make -C mpy-cross
 
-5. Fetch submodules for your port: navigate into the specific hardware directory (port) for the board. For the OpenRB-150 with its ATMEL SAMD21processor the correct directory is ports/atmel-samd. Fetch only the submodules needed for that hardware to save time and storage. 
+5. Fetch submodules for your port: navigate into the specific hardware 
+directory (port) for the board. For the OpenRB-150 with its ATMEL 
+SAMD21processor the correct directory is ports/atmel-samd. Fetch only the 
+submodules needed for that hardware to save time and storage. 
 
     cd ports/atmel-samd 
     make fetch-port-submodules
@@ -210,7 +244,8 @@ Delete the build dir, recompile and repeat until the build succeeds:
     rm -rf build-openrb_150
     make BOARD=openrb_150
 
-8. Flash the firmware to the board.  Put the board into bootloader mode by double clicking the reset button.  The yellow LED should pulse slowly.
+8. Flash the firmware to the board.  Put the board into bootloader mode by 
+double clicking the reset button.  The yellow LED should pulse slowly.
 
 Run the following command, updating the pathing for your system (MacOS):
 
@@ -221,12 +256,13 @@ Run the following command, updating the pathing for your system (MacOS):
 Once flashed, the board will boot as a CircuitPython device and a CIRCUITPY
 flash drive should appear in Finder.  
 
-9. Install program files and test.  Copy both demo.py and code.py to CIRCUITPY and attach two XL330 motors as ID 1 & 2 at 1,000,000. The motors 
-should move.
+9. Install program files and test.  Copy both demo.py and code.py to CIRCUITPY
+and attach two XL330 motors as ID 1 & 2 at 1,000,000. The motors should move.
 
 10. Check the repl
 
-With the board connected, look for the /dev/cu.usbmodem1101 device in /dev and connect a serial monitor to it:
+With the board connected, look for the /dev/cu.usbmodemNNNN device in /dev 
+and connect a serial monitor to it:
 
     ls /dev/cu.usbmodem*
     /dev/cu.usbmodem1101
