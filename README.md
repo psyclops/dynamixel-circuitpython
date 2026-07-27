@@ -4,8 +4,9 @@ dynamixel-circuitpython
 
 -----------------------------------------------------------------------------
 
-CircuitPython library to drive Robotis Dynamixel servo motors attached to an
-OpenRB-150 board flashed with custom CircuitPython firmware.
+CircuitPython library and associated custom CircuitPython firmware to enable
+driving Robotis Dynamixel servo motors attached to an OpenRB-150 board 
+running as a CircuitPython device.
 
 -----------------------------------------------------------------------------
 
